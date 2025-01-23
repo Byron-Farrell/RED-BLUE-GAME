@@ -131,7 +131,7 @@ const RedBlueGame = (props) => {
                 </div>
             </div> :
                 <div className={'flex flex-col justify-center items-center h-lvh '}>
-                    <PlainButton onClick={startGame} className={'text-xl hover:bg-emerald-600 hover:border-emerald-600 active:bg-emerald-600 active:border-emerald-600 text-slate-100'}>{started ? "RESTART" : "START"}</PlainButton>
+                    <PlainButton onClick={startGame} className={'text-xl md:w-auto w-full hover:bg-emerald-600 hover:border-emerald-600 active:bg-emerald-600 active:border-emerald-600 text-slate-100'}>{started ? "RESTART" : "START"}</PlainButton>
                 </div>
             }
 
