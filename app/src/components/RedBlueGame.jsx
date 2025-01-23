@@ -119,7 +119,7 @@ const RedBlueGame = (props) => {
     }
     return (
         <div>
-            {(timer > 0) ? <div className="sm:p-10 p-2">
+            {(timer > 0) ? <div className="sm:p-10">
                 <div className={'text-white'}>
                     <div>Time: {formatTime()}</div>
                     <div>Score: {score}</div>
