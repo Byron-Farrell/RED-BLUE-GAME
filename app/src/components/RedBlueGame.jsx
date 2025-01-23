@@ -119,15 +119,15 @@ const RedBlueGame = (props) => {
     }
     return (
         <div>
-            {(timer > 0) ? <div className="sm:p-10">
+            {(timer > 0) ? <div className="sm:p-10 p-2">
                 <div className={'text-white'}>
                     <div>Time: {formatTime()}</div>
                     <div>Score: {score}</div>
                 </div>
                 <header className={`${wordIsRed ? 'text-red-400' : 'text-blue-400'} text-9xl text-center mt-16 mb-32`}>{ word }</header>
                 <div className={'flex gap-8 md:flex-row flex-col justify-center items-center'}>
-                    <PlainButton onClick={() => handleClick(button1)} className={`${isRed1 ? 'text-red-400' : 'text-blue-400'} text-3xl md:w-auto w-fit hover:bg-slate-700 active:bg-slate-700`}>{ button1 }</PlainButton>
-                    <PlainButton onClick={() => handleClick(button2)} className={`${isRed2 ? 'text-red-400' : 'text-blue-400'} text-3xl md:w-auto w-fit hover:bg-slate-700 active:bg-slate-700`}>{ button2 }</PlainButton>
+                    <PlainButton onClick={() => handleClick(button1)} className={`${isRed1 ? 'text-red-400' : 'text-blue-400'} text-3xl md:w-auto w-full hover:bg-slate-700 active:bg-slate-700`}>{ button1 }</PlainButton>
+                    <PlainButton onClick={() => handleClick(button2)} className={`${isRed2 ? 'text-red-400' : 'text-blue-400'} text-3xl md:w-auto w-full hover:bg-slate-700 active:bg-slate-700`}>{ button2 }</PlainButton>
                 </div>
             </div> :
                 <div className={'flex flex-col justify-center items-center h-lvh '}>
