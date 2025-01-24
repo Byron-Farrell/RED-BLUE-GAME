@@ -2,6 +2,9 @@ import PlainButton from "./PlainButton";
 import React, {useEffect} from 'react';
 import Modal from "./Modal";
 
+
+const tickingAudio = new Audio('audio/clock-ticking.mp3');
+
 const RedBlueGame = (props) => {
     const [score, setScore] = React.useState(0);
     const [wordIsRed, setWordIsRed] = React.useState(true);
@@ -14,6 +17,23 @@ const RedBlueGame = (props) => {
     const [correct, setCorrect] = React.useState(0);
     const [incorrect, setIncorrect] = React.useState(0);
     const [started, setStarted] = React.useState(false);
+    const [isMuted, setIsMuted] = React.useState(false);
+
+
+    function handleAudioClick() {
+        setIsMuted((prevState) => !prevState);
+    }
+
+    useEffect(() => {
+        if (!isMuted && timer <= 9 && tickingAudio.paused && timer > 0) {
+            tickingAudio.play();
+        }
+        else if (isMuted && !tickingAudio.paused) {
+            tickingAudio.pause()
+            tickingAudio.currentTime = 0;
+        }
+
+    }, [isMuted, timer]);
 
     useEffect(() => {
         if (timer > 0) {
@@ -24,14 +44,15 @@ const RedBlueGame = (props) => {
             return () => clearInterval(intervalId);
         }
 
-
-
     }, [timer]);
 
     function ShowModal() {
         if (timer > 0) {
             return null
         }
+
+        tickingAudio.pause();
+        tickingAudio.currentTime = 0;
 
         return (
             <Modal>
@@ -71,10 +92,8 @@ const RedBlueGame = (props) => {
             setCorrect((prevCorrect) => prevCorrect + 1);
         }
         else {
-            if (score > 0) {
-                setScore((prevScore) => prevScore - 1);
-                setIncorrect((prevIncorrect) => prevIncorrect + 1);
-            }
+            setScore((prevScore) => prevScore - 1);
+            setIncorrect((prevIncorrect) => prevIncorrect + 1);
         }
         const randomNumber = Math.floor(Math.random() * 2)
 
@@ -93,7 +112,6 @@ const RedBlueGame = (props) => {
         else {
             setWord('BLUE')
         }
-
 
         const randomNumber3 = Math.floor(Math.random() * 2)
 
@@ -117,14 +135,26 @@ const RedBlueGame = (props) => {
             setButton2('RED')
         }
     }
+
     return (
         <div className="sm:p-10 p-2">
             {(timer > 0) ? <div>
-                <div className={'text-white'}>
-                    <div>Time: {formatTime()}</div>
-                    <div>Score: {score}</div>
-                </div>
-                <header className={`${wordIsRed ? 'text-red-400' : 'text-blue-400'} text-9xl text-center mt-16 mb-32`}>{ word }</header>
+                    <div className={'flex'}>
+                        <div className={'text-white grow'}>
+                            <div>Time: {formatTime()}</div>
+                            <div>Score: {score}</div>
+                        </div>
+                        <button className={"rounded-full p-3 bg-slate-600 active:bg-slate-500"} onClick={handleAudioClick}>
+                            <img
+                                className={'size-8 text-white'}
+                                src={isMuted ? "icons/mute.svg" : "icons/unmute.svg"}
+                                alt={isMuted ? "mute" : "unmute"}
+                            />
+                        </button>
+                    </div>
+
+                    <header
+                        className={`${wordIsRed ? 'text-red-400' : 'text-blue-400'} text-9xl text-center mt-16 mb-32`}>{word}</header>
                 <div className={'flex gap-8 md:flex-row flex-col justify-center items-center'}>
                     <PlainButton onClick={() => handleClick(button1)} className={`${isRed1 ? 'text-red-400' : 'text-blue-400'} text-3xl md:w-auto w-full hover:bg-slate-700 active:bg-slate-700`}>{ button1 }</PlainButton>
                     <PlainButton onClick={() => handleClick(button2)} className={`${isRed2 ? 'text-red-400' : 'text-blue-400'} text-3xl md:w-auto w-full hover:bg-slate-700 active:bg-slate-700`}>{ button2 }</PlainButton>
